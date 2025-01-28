@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: tons-game-hub
+    runtime: python :3.9.0
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn TonsGameHub.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: db.sqlite3
+          property: connectionString
+
+databases:
+  - name: db.sqlite3
+    databaseName: db.sqlite3
+    engine: sqlite   
+    user: user
+    password: 
