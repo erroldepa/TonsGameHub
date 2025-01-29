@@ -20,6 +20,6 @@ services:
 databases:
   - name: db.sqlite3
     databaseName: db.sqlite3
-    engine: sqlite   
+    engine: sqlite3
     user: user
-    password: 
+    password: ee
