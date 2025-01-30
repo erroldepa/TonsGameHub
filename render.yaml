@@ -1,26 +1,26 @@
-databases:
-  - name: tons_db
-    databaseName: tons_db
-    user: user
-    plan: free
-
 services:
   - type: web
     name: tons-game-hub
     runtime: python
-    env: python
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn ecommorce.wsgi:application"
+    buildCommand: "./build.sh"    # Make sure you have this build script
+    startCommand: "gunicorn ecommerce.wsgi:application"
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: DJANGO_SETTINGS_MODULE
+        value: ecommerce.settings
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: false
       - key: DATABASE_URL
         fromDatabase:
-          name: tons_db
+          name: postgres
           property: connectionString
-      - key: DEBUG
-        value: "False"
-      - key: PYTHON_VERSION
-        value: "3.9.0"
-      - key: SECRET_KEY
-        generateValue: true
-      - key: DJANGO_ALLOWED_HOSTS
-        value: ".onrender.com"
+
+databases:
+  - name: postgres
+    ipAllowList: []
+    plan: free
