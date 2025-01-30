@@ -6,11 +6,11 @@ databases:
 
 services:
   - type: web
-    name: tons-e-commerce
+    name: tons-game-hub
     runtime: python
     env: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn ecom.wsgi:application"
+    startCommand: "gunicorn ecommorce.wsgi:application"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
