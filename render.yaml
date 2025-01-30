@@ -10,7 +10,7 @@ services:
     runtime: python
     env: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn your_project_name.wsgi:application"
+    startCommand: "gunicorn tons_game_hub.wsgi:application"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
