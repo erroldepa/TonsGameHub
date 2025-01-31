@@ -79,19 +79,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-        )
-    }
-
-
+# Database configuration
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -131,8 +127,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'static')
@@ -154,3 +148,9 @@ EMAIL_HOST_PASSWORD = 'xyz' # host email password required
 # otherwise you will get SMTPAuthenticationError at /contactus
 # this process is required because google blocks apps authentication by default
 EMAIL_RECEIVING_USER = ['to@gmail.com'] # email on which you will receive messages sent from website
+
+# Security settings for production
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
